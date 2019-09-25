@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-demo",
+  "version": "1.0.0",
+  "main": "template.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhouxuan2017/demo-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhouxuan2017/demo-node/issues"
+  },
+  "homepage": "https://github.com/zhouxuan2017/demo-node#readme",
+  "dependencies": {
+    "titbit": "^3.4.5"
+  },
+  "devDependencies": {},
+  "keywords": [],
+  "description": ""
+}
