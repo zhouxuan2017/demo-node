@@ -15,5 +15,5 @@ if(info.length!==2){
   console.error('信息有误！');
   process.exit(2);
 }
-i
+
 log('usr:%s pwd:%s',info[0],info[1]);
