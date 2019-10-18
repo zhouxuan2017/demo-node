@@ -213,4 +213,4 @@
         return str;
     };
 
-})(8083,"localhost");
+})(window);
