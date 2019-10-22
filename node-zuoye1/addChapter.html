@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: url(./bg.jpg) repeat;
+        }
+        table {
+            border-collapse: collapse;
+            width: 885px;
+            margin: 0 auto;
+            text-align: center;
+            display: block;
+            margin-top: 100px;
+        }
+        table td, table th {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 45px;
+        }
+        table thead th {
+            background-color: #CCE8EB;
+            width: 220px;
+        }
+        table tr:nth-child(odd) {
+            background: #fff;
+        }
+        table tr:nth-child(even) {
+            background: #F5FAFA;
+        }
+
+        .container {
+            margin-top: 60px;
+        }
+        .left {
+            background-color:#d0daf3;
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            width: 250px; 
+        }
+        .left li {
+            text-align: center;
+            height: 60px;
+            line-height: 60px;
+            font-size: 15px;
+        }
+        .left li:nth-child(2) {
+            background-color: #eee;
+        }
+        .left li:hover {
+            background-color:#eee;
+        }
+        .left a {
+            color:black;
+            text-decoration: none;
+        }
+        .right {
+            border: 1px solid white;
+            margin-left: 250px;
+            background: url(./bg.jpg) repeat;
+        }
+        nav {
+            width: 100%;
+            min-width: 960px;
+            height: 60px;
+            background-color: #2a4795;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index:200;
+            color: white;
+            text-align: center;
+            line-height: 60px;
+            font-size: 20px;
+        }
+        .editor_title {
+            line-height: 16px;
+            width: 800px;
+            height: 30px;
+        }
+
+        .editor_textfield {
+            padding: 0 9px;
+            line-height: 28px;
+            font-size: 14px;
+            color: #333;
+            background-color: #FFF;
+            border: 1px solid #ccc;
+            border-right-color: #ccc;
+            border-bottom-color: #ccc;
+        }
+        textarea, input {
+            outline: 0;
+        }
+        html, body, div, p, ul, li, ol, dl, dt, dd, pre, code, table, tr, td, form, fieldset, legend, button, input, textarea, h1, h2, h3, h4, h5, h6, hr, blockquote {
+            margin: 0;
+            padding: 0;
+        }
+        .chapter {
+            width: 800px;
+            margin: 0 auto;
+            margin-top: 60px;
+
+        }
+        .content {
+            outline:1px solid #eee;
+            border: 1px solid #ccc;
+            background: white;
+            padding: 9px;
+            margin-top: 30px;
+            height: 300px;
+            width: 800px;
+            font-size: 12px;
+        }
+        .el-button {
+            display: inline-block;
+            line-height: 1;
+            white-space: nowrap;
+            cursor: pointer;
+            background: #FFF;
+            border: 1px solid #DCDFE6;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            outline: 0;
+            margin: 0;
+            -webkit-transition: .1s;
+            transition: .1s;
+            font-weight: 500;
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+        .el-button--primary {
+            color: #FFF;
+            background-color: #409EFF;
+            border-color: #409EFF;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+    </style> 
+</head>
+<body>
+    <nav></nav>
+    <div class="container">
+        <div class="left">
+            <ul>
+                <li>
+                    <a href="##"  onclick="showList()">文章列表</a>
+                </li>
+                <li>
+                    <a href="##" onclick="addChapter()">添加文章</a>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="chapter">
+                <input type="text"  placeholder="文章标题"  class="editor_textfield editor_title ui_textfield j_title j_topic_sug_input normal-prefix" name="title" autocomplete="off" id="title">
+                <div class="content" contenteditable="true" id="ct"></div>
+                <button class="el-button login-btn-submit el-button--primary" id="sub">提交</button>
+            </div>
+        </div>
+    </div>
+    
+        
+</body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    function showList() {
+        window.location = "http://localhost:8083/listmanager/"
+    }
+    $("#sub").click(function() {
+        $.post("http://localhost:8083/add", {"title": $("#title").val(), "content": $("#ct").html()}, function(data) {
+            window.location = "http://localhost:8083/listmanager/"
+        })
+    })
+</script>
+</html>
