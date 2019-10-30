@@ -1,95 +1,15 @@
-#!/usr/bin/node
 
-const http = require('http'),
-    fs = require('fs'),
-    path = require('path'),
-    url = require('url'),
-    fetch = require('node-fetch'),
-    qs = require('querystring');
+    fetch('http://localhost:8083/detail?chapterId=3').then(function (res) {
+      return res.json()
+       
+     }).then(function (data) 
+     {
+      console.log(data)   
+     }).catch(function (e) {
+         console.log('error');
+     })
+    
 
-http.createServer(function (req, res) {
- 
-    if (req.url === '/') {
-        add(res);
-    }
-    else if (req.url === '/list') {
-        list(req, res, '.././chapterList.html')
-    }
-    else if (req.url === '/login') {
-        list(req, res, '.././login.html')
-    }
-    else if (req.url === '/addChapter') {
-        list(req, res, '.././addChapter.html');
-    }
-    else if (req.url === '/listmanager') {
-        list(req, res, '.././list.html');
-    }
-   else if(req.url.includes('detail'))
-   {
-    list(req, res, '.././chapter.html');
-       select(req,res);
-   }
-    else {
-        fs.readFile("../." + req.url, function (err, data) {
-            if (err) throw err;
-            res.end(data);
-        });
-
-
-    }
-}).listen(8083, 'localhost');
-function err(res) {
-    var msg = 'Not found';
-    res.writeHead(404, {
-        'Content-Length': msg.length,
-        'Content-Type': 'text/plain'
-    });
-    res.end(msg);
-}
-function list(req, res, location) {
-    fs.readFile(location, 'utf-8', function (err, data) {
-        if (err) throw err;
-        res.writeHead(200, {
-            "Content-Type": "text/html"
-        });
-        res.end(data);
-    });
-  
-}
-function select(req, res) {
-    var s=fs.readFile('.././chapter.html')
-    var data=qs.parse(url.parse(req.url).query).chapterId;
-    console.log(data);
-    var html=JSON.stringify(chapterList[data-1])
-    res.writeHead(200, {
-        'Content-Length': Buffer.byteLength(html),
-        'Content-Type': 'text/html; charset="utf-8"',
-        'Access-Control-Allow-Origin': '*'
-      });
-      res.end(html);
-}
-function add(res) {
-    var html = '<!DOCTYPE html>'
-        + '<html>'
-        + '  <head>'
-        + '    <meta charset="UTF-8">'
-        + '    <title>home</title>'
-        + '  </head>'
-        + '    <body>'
-        + '<ul>'
-        + '      <li> <a href="/list">list</a></li>'
-        + '       <li><a href="/login">login</a></li>'
-        + '       <li><a href="/listmanager">listmanagert</a></li>'
-        + '       <li><a href="/addChapter">addChapter</a></li>'
-        + '</ul>'
-        + '    </body>'
-        + '</html>';
-
-    res.setHeader('Content-Type', 'text/html');
-    res.setHeader('Content-Length', Buffer.byteLength(html));
-    res.statusCode = 200;
-    res.end(html);
-}
 var chapterList = [
     {
         "chapterId": 1,

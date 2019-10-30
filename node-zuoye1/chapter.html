@@ -5,15 +5,15 @@
 <link href="css/new.css" rel="stylesheet">
 </head>
 <body>
-
+  <script src="./js/fetch.js"></script>
 <article class="blogs">
   <div class="index_about">
-    <h2 class="c_titile" id="title">生活是什么？</h2>
+    <h2 class="c_titile" id="title"></h2>
     <p class="box_c">
-    	<span class="d_time">发布时间：<span id="publish">2015-11-16 10:42</span></span>
-        <span>编辑：<span id="author">admin</span></span>
+    	<span class="d_time">发布时间：<span id="publish"></span></span>
+        <span>编辑：<span id="author"></span></span>
         <span>互动QQ群：<a>1234567</a>
-       <span>浏览次数：<span id="views">12</span></span>
+       <span>浏览次数：<span id="views"></span></span>
         </span>
     </p>
     
@@ -37,12 +37,15 @@
 </footer>
 </body>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script>
     $(document).ready(function() {
         var search = window.location.search;
         var chapterId = search.substr(search.indexOf("=") + 1);
-        $.get("http://localhost:8084/getDetail?chapterId=" + chapterId, function(data) {
+        $.get("http://localhost:8083/detail?chapterId="+chapterId, function(data) {
+          console.log(data)
             var dataObj = JSON.parse(data);
+            console.log(dataObj[0]["chapterName"])
             $("#title").html(dataObj[0]["chapterName"]);
             $("#publish").html(dataObj[0]["publishTimer"]);
             $("#author").html(dataObj[0]["author"]);

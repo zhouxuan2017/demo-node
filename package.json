@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/zhouxuan2017/demo-node#readme",
   "dependencies": {
+    "node-fetch": "^2.6.0",
     "titbit": "^3.4.5"
   },
   "devDependencies": {},
