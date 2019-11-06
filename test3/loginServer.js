@@ -24,24 +24,24 @@ http.createServer(function (req, res) {
     else {err(res)}
 }).listen(8081, 'localhost')
 
-function userNamePasswd(str) {
-    var msg = str.split(' ');
-    assert.equal(msg.length, 2, 'must to be 2');
-    assert.equal(msg[0], 'Basic', 'must to be Basic');
-    msg = Buffer.from(msg[1], 'base64').toString('utf8').split(':');
-    return {
-        username: msg[0],
-        pwd: msg[1]
-    }
-}
+// function userNamePasswd(str) {
+//     var msg = str.split(' ');
+//     assert.equal(msg.length, 2, 'must to be 2');
+//     assert.equal(msg[0], 'Basic', 'must to be Basic');
+//     msg = Buffer.from(msg[1], 'base64').toString('utf8').split(':');
+//     return {
+//         username: msg[0],
+//         pwd: msg[1]
+//     }
+// }
 
 function sendSecretMsg(req, res) {
     req.on('data', function (chunk) {
         var post = '';
         post += chunk;
-        if (req.headers.authorization) {
-            var usr = userNamePasswd(req.headers.authorization)
-            if (usr.username === qs.parse(post).username && usr.pwd === qs.parse(post).pwd) {
+        // if (req.headers.authorization) {
+        //     var usr = userNamePasswd(req.headers.authorization)
+            if ('zhangsan' === qs.parse(post).username && '123' === qs.parse(post).pwd) {
                 var count = 1;
                 if (typeof req.headers.cookie !== 'undefined') {
                     var data = req.headers.cookie.split('=');
@@ -69,9 +69,11 @@ function sendSecretMsg(req, res) {
                     res.end(JSON.stringify('您输入的密码和用户名错误！'))
                 }
             }
-        }
-    })
-}
+        })
+    
+}    
+  
+    
 function err(res) {
     var msg = 'Not found!';
     res.statusCode = 404;
