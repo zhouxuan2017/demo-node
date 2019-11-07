@@ -221,58 +221,17 @@
     }
     $(document).ready(function() {
         $.get("http://localhost:8083/add", function(data) {
-          console.log('a',data)
+          //console.log('a',data)
           var v=JSON.parse(data);
-          console.log(v)
-          var aa;
-        
+          //console.log(v)
+          var aa;  
             v.forEach((e,idx) => {
               console.log(idx)
-              aa+="<tr><td>"+idx+"</td><td>"+v[idx].title+"</td><td>"+v[idx].content+"</td><td>新添加</td><tr>";
+              aa="<tr><td>"+idx+"</td><td>"+v[idx].title+"</td><td>"+v[idx].content+"</td><td>新添加</td><tr>";
                 $("#result").append(aa);
-              console.log(aa)
-            
-           
-          });
-      
-          
-         
-       
-        
-        //   $('#result').innerHTML=v.title
-        //   var dataObj = JSON.parse(data);
-        // console.log(dataObj[4]);
-            // var dataObj = JSON.parse(data);
-            // console.log(dataObj[0]["chapterName"])
-            // $("#result").innerHTML(
-            //     <tr>fs</tr>
-            // );
-            // $("#publish").html(dataObj[0]["publishTimer"]);
-            // $("#author").html(dataObj[0]["author"]);
-            // $("#views").html(dataObj[0]["views"]);
-            // $("#content").html(dataObj[0]["chapterContent"]);
+              //console.log(aa)    
+          });    
         })
     })
 </script>
 </html>
-<!-- $(document).ready(function(){
-    $.get("http://localhost:8083/addChapter",(data)=>{
-        var dataObj = JSON.parse(data);
-        console.log(dataObj[4]);
-            var parent=$('<tr></tr>');
-            var td1=$('<td></td>');
-            td1.append(1);
-            var td2=$('<td></td>');
-            td2.append(dataObj[4].title);
-            var td3=$('<td></td>');
-            td3.append(dataObj[4].content);
-            var td4=$('<td></td>');
-            td4.append("admin");
-            td1.appendTo(parent);
-            td2.appendTo(parent);
-            td3.appendTo(parent);
-            td4.appendTo(parent);
-            $('#result').append(parent);
-            
-    })
-}) -->

@@ -25,7 +25,7 @@ window.onload=function()
         }).then(res=>{
             if(res.status===200)
             {
-                window.location = 'http://localhost:8083/listmanager/'
+                window.location = 'http://localhost:8083/addChapter/'
 
             }
             else{

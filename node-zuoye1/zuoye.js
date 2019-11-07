@@ -11,34 +11,32 @@ var userList = [
     { username: "admin", pwd: "admin" }
 ]
 //添加文章里面的新数组
-var arr=[];
+var arr = [];
 
 //判断请求是GET还是POST
 http.createServer(function (req, res) {
     if (req.method === 'GET') {
-        if(req.url==='/add')
-        {        
-                var arr1 = JSON.stringify(arr);
-                res.writeHead(200,{
-                    'Content-Length':Buffer.byteLength(arr1),
-                    'Content-Type':'text/plain;charset="utf-8"',
-                    'Access-Control-Allow-Origin':'*'
-                })	
-				res.end(arr1);
+        if (req.url === '/add') {
+            var arr1 = JSON.stringify(arr);
+            res.writeHead(200, {
+                'Content-Length': Buffer.byteLength(arr1),
+                'Content-Type': 'text/plain;charset="utf-8"',
+                'Access-Control-Allow-Origin': '*'
+            })
+            res.end(arr1);
         }
-        else{
+        else {
             load(req, res);
         }
     }
     else if (req.method === 'POST') {
         if (req.url == '/login/') {
-        sendSecretMsg(req, res);
+            sendSecretMsg(req, res);
         }
-        else if(req.url==='/add')
-        {
-            addTitle(req,res);
+        else if (req.url === '/add') {
+            addTitle(req, res);
         }
-        else{
+        else {
             err(res);
         }
     }
@@ -56,64 +54,69 @@ function err(res) {
     });
     res.end(msg);
 }
-
 //GET请求判断url条件
 function load(req, res) {
     var dir = __dirname;
+    var path = url.parse(req.url).pathname;
     if (req.url === 'favicon.ico') return;
     else if (req.url === '/') {
         add(res);
     }
+    else if (url.parse(req.url).pathname === '/chapter.html') {
+        list(req, res, './chapter.html')
+    }
+    else if (url.parse(req.url).pathname === '/detail') {
+        var aa = url.parse(req.url).query.split('=')[1];
+        //console.log(aa);
+        var bb = JSON.stringify(chapterList[aa - 1]);
+        //console.log((bb))
+        res.writeHead(200, {
+            'Content-Length': Buffer.byteLength(bb),
+            'Content-Type': 'text/plain;charset="utf-8"'
+        })
+        res.end(bb)
+    }
     else if (req.url === '/list/') {
+        //console.log(req.url.split('?')[0].split(''))
         list(req, res, './chapterList.html')
     }
     else if (req.url === '/login/') {
+        
         list(req, res, './login.html')
     }
     else if (req.url === '/addChapter/') {
 
         list(req, res, './addChapter.html');
     }
-   else if(req.url==="/detail?chapterId=1")
-   {
-    console.log(req.url.split('?')[0].split('/'))
-    list(req, res, './chapter.html');
-   
-   }
     else if (req.url === '/listmanager/') {
         list(req, res, './list.html');
     }
     else {
-        //取两个//中间的那个值
         var dir1 = req.url.split('?')[0].split('/');
-        console.log(dir1);
+       //console.log(req.url.split('?')[0].split('/'))
         // console.log('a',req.url.split('?')[0].split('/'));
-        if (dir1.length > 2) {
+        if(dir1[1]=='login')
+        {
             for (var a = 2; a < dir1.length; a++) {
                 dir += '/' + dir1[a];
-             
             }
         }
-    else if(dir1.length>0&&dir1.length<3)
-    {
-        for (var a = 1; a < dir1.length; a++) {
-            dir += '/' + dir1[a];
-         
+       else if (dir1.length > 3) {
+
+            for (var a = 2; a < dir1.length; a++) {
+                dir += '/' + dir1[a];
+            }
         }
-    }
         else {
             for (var a = 0; a < dir1.length; a++) {
                 dir += '/' + dir1[a];
-               console.log(dir)
             }
         }
-        fs.readFile(dir, function (err, data) {
-            if (err) throw err;
-            res.end(data);
-        });
     }
-}
-
+    fs.readFile(dir, function (err, data) {
+        res.end(data);
+    });        
+}   
 //读取指定文件函数
 function list(req, res, location) {
     fs.readFile(location, 'utf-8', function (err, data) {
@@ -128,46 +131,44 @@ function list(req, res, location) {
 //POST请求进行用户登录验整
 function sendSecretMsg(req, res) {
     var post = '';
-   
-        req.on('data', function (data) {
-            post += data;
-            // console.log(JSON.parse( post))
-        })
-        req.on('end', function () {
-            // console.log(userList[0].username)
-            // console.log(JSON.parse(post).username==userList[0].username)
-            if (JSON.parse(post).username == userList[0].username && JSON.parse(post).pwd == userList[0].pwd) {
-                res.writeHead(200, {
-                    "Content-Type": "text/plain"
-                });
-                res.end('OK')
-            }
-            else {
-               res.statusCode=404;
-                res.end('NO OK')
-            }
-        })
-   
+
+    req.on('data', function (data) {
+        post += data;
+        // console.log(JSON.parse( post))
+    })
+    req.on('end', function () {
+        // console.log(userList[0].username)
+        // console.log(JSON.parse(post).username==userList[0].username)
+        if (JSON.parse(post).username == userList[0].username && JSON.parse(post).pwd == userList[0].pwd) {
+            res.writeHead(200, {
+                "Content-Type": "text/plain"
+            });
+            res.end('OK')
+        }
+        else {
+            res.statusCode = 404;
+            res.end('NO OK')
+        }
+    })
+
 }
 
-
 //POST增加文章
-
-function addTitle(req,res){
-    var data1='';
-    req.on('data',function(data){
-        data1+=data;    
+function addTitle(req, res) {
+    var data1 = '';
+    req.on('data', function (data) {
+        data1 += data;
         // console.log(data1)
     })
-    req.on('end',function(){
-     
-            //    console.log(data1.toString('utf-8'))
-            //    console.log(qs.parse(data1))
-            //    console.log(qs.parse(data1.toString('utf-8')))
-               arr.push(qs.parse(data1.toString('utf-8')))
-                // console.log(arr)
-				res.end();
-     
+    req.on('end', function () {
+
+        //    console.log(data1.toString('utf-8'))
+        //    console.log(qs.parse(data1))
+        //    console.log(qs.parse(data1.toString('utf-8')))
+        arr.push(qs.parse(data1.toString('utf-8')))
+        // console.log(arr)
+        res.end();
+
     })
 }
 
