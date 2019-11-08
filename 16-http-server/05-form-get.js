@@ -8,9 +8,9 @@ const  http = require('http'),
 var items=['eat'];
 http.createServer((req, res) => {
 
-  log(`${req.method} ${req.url} HTTP/${req.httpVersion}`);
+  /*log(`${req.method} ${req.url} HTTP/${req.httpVersion}`);
   log(req.headers);
-  log();
+  log();*/
 
   function getHTML(){
     return ''
@@ -21,9 +21,9 @@ http.createServer((req, res) => {
 +'<title>TO DO list</title>'
 + '</head>'
 +'<body>'
-+'<h1>TODO List</h1>'
-  +'<ul>'
-  +items.map(function(item){return '<li>'+item+'</li>';}).join('\n')
++'<h1>TODO List</h1>' 
+  +'<ul>\n'
+  +items.map(function(ite1m){return '<li>'+ite1m+'</li>';}).join('\n')
  + '</ul>'
   +'<form metho="GET" action="/">'
     +'<input type="text" name="item">'
@@ -40,7 +40,12 @@ http.createServer((req, res) => {
     res.end(getHTML());
   }else{
     //404 not found
-      var it=qs.parse(url.parse(req.url).query).item;
+    var it=qs.parse(url.parse(req.url).query).item;
+      log('req.url:',req.url);
+      log('2:',url.parse(req.url));
+      log('3',url.parse(req.url).query);
+      log('4:',qs.parse(url.parse(req.url).query))
+      log(it);
       if(typeof it !=='undefined'){
         items.push(it);
       }

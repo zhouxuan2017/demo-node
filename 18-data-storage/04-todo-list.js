@@ -1,9 +1,19 @@
 #!/usr/bin/node
 
 const http = require('http'),
-      qs   = require('querystring');
+      qs   = require('querystring'),
 
-var items = [];
+     mysql=require('mysql'),
+      con=mysql.createConnection({
+        host:'localhost',
+        user:'root',
+        password:'ddd',
+        database:'test'
+      });
+
+con.connect();
+
+var items = select();
 
 http.createServer((req, res) => {
   if(req.url != '/') {
@@ -55,6 +65,32 @@ function show(res) {
   res.end(html);
 }
 
+function select(){
+    
+
+con.query('select * from todo', function(err, result) {
+  if(err) {
+        console.error(err.message);
+            process.exit(1);
+              
+  }
+
+    console.log(result);
+
+});
+}
+//插入到数据库
+function insert(item){
+con.query('insert into todo(item) values(?)',
+    [item], function(err, result) {
+      if(err) {
+        console.error(err.message);
+        process.exit(1);
+      }
+          return 0;
+        });
+//删
+}
 function add(req, res) {
   var body = '';
 
@@ -79,3 +115,8 @@ function err(res) {
 
   res.end(msg);
 }
+
+
+con.end(); 
+
+
