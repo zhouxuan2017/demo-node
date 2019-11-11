@@ -117,20 +117,20 @@ window.onload=function(){
   login.onclick=function(){
       body.username=username.value;
       console.log(body.username);
-      body.pwd=username.pwd;
+      body.pwd=pwd.value;
       console.log(body.pwd);
-      fetch('http://192.168.121.144:8080/login'){
+      console.log(JSON.stringify(body))
+      fetch('http://192.168.121.144:8080/login',{
         method:'POST',
-        body:JSON.stringify(body),
+        body:JSON.stringify(body), 
         headers:{
-          'user-agent': 'Mozilla/4.0 MDN Example',
-           'content-type': 'application/json'
+                   'content-type': 'application/json'
         },
           
       }).then(res=>{
                 if(res.status===200)
                 {
-                                window.location = 'http://192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/192.168.121.144:8080/'
+                                window.location = 'http://192.168.121.144:8080/list'
 
                                             
                 }
