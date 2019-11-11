@@ -3,12 +3,12 @@
 const log=console.log;
 
 log('CPU:',process.arch);
-log('OS:',process.platfrom);
+log('OS:',process.platform);
 
 log('process id:',process.pid);
 log('PID:',process.execPath);
 
-log('execPath',process.e);
+log('execPath',process.execPath);
 log('node.js var:',process.version);
 log('uid:',process.getuid());
 log('gid:',process.getgid());

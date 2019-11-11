@@ -1,19 +1,25 @@
 #!/usr/bin/node
 
-const mgs=['Name','QQ','Email','Mobile'];
+const log   = console.log,
+      stdin = process.stdin,
+      stdout= process.stdout,
+      msg   = ['Name', 'Email', 'QQ', 'Mobile'];
 
-var usr={},i=0;
-console.log(mgs[0]);
+var me = {}, i = 1;
 
-process.stdin.on('data',function(data){
-  usr[mgs[i]]=data.slice(0,data.length-1).toString('utf-8');
-  if(i==mgs.length){
+stdout.write(msg[0] + ': ');
+
+stdin.on('data', (data) => {
+  me[msg[i-1]] = data.slice(0, data.length - 1).toString('utf8');
+  if(i === 4) {
+    log(me);
     process.exit();
-  
   }
-  console.log(mgs[i++]+':');
+
+  stdout.write(msg[i++] + ': ');
 });
 
-process.stdin.on('end',function(){
-  console.log(usr);
-})
+stdin.on('end', () => {
+  log(me);
+});
+
