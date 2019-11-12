@@ -206,7 +206,24 @@
     
         
 </body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
-   
+       $(document).ready(function() {
+        // $.post("http://localhost:3000/add", {"title": $("#title").val(), "content": $("#ct").html()}, function(data) {
+           
+        // })
+        $.get("http://localhost:3000/add", function(data) {
+          //console.log('a',data)
+          var v=JSON.parse(data);
+          var aa;  
+            v.forEach((e,idx) => {
+              console.log(idx)
+              aa="<tr><td>"+idx+"</td><td>"+v[idx].title+"</td><td>"+v[idx].views+"</td><td>admin</td><tr>";
+                $("#result").append(aa);
+              //console.log(aa)    
+            })
+          }); 
+
+        })
 </script>
 </html>

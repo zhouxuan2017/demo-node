@@ -1,0 +1,7 @@
+主要代码都在routes文件夹内
+其中index.js是调用的代码
+error.html为新增代码  在用户输入的用户名密码不正确时调用
+list.html 里面新增post 、get方法  进行渲染页面
+login.html里面对form新增method和action   button改为submit按钮 两个input框新增name属性
+默认端口3000    http://localhost:3000访问  npm start
+  
