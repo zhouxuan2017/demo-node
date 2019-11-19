@@ -2,9 +2,9 @@
 
 const http = require('http'),
     fs = require('fs'),
-    path = require('path'),
+    //path = require('path'),
     url = require('url'),
-    fetch = require('node-fetch'),
+    //fetch = require('node-fetch'),
     qs = require('querystring');
 //登录页面规定的用户账号
 var userList = [
